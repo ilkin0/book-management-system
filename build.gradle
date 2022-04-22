@@ -1,53 +1,82 @@
 plugins {
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.bmuschko.docker-remote-api' version "$dockerPluginVersion" apply false
     id 'java'
 }
 
 group = 'com.ilkinmehdiyev'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = JavaVersion.VERSION_17
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+def javaProjects = [
+//        project(':ms-user-management')
+]
+
+allprojects {
+    def gitHash = 'git rev-parse --short HEAD'.execute().text.trim()
+    version = "$projectVersion.$gitHash"
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'com.bmuschko.docker-remote-api'
+}
+
+subprojects {
+    apply plugin: 'pmd'
+    apply plugin: 'checkstyle'
+
+    dependencies {
+        implementation "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+        implementation "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
+        implementation "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
+
+        compileOnly "io.springfox:springfox-boot-starter:${springfoxStarterVersion}"
+        compileOnly "io.springfox:springfox-data-rest:${springfoxStarterVersion}"
+        compileOnly "io.springfox:springfox-bean-validators:${springfoxStarterVersion}"
+    }
+
+    pmd {
+        toolVersion = '6.21.0'
+        ruleSets = []
+        ignoreFailures = false
+        ruleSetFiles = files("${rootProject.projectDir}/qa/pmd.xml")
+    }
+
+    checkstyle {
+        toolVersion = '8.15'
+        configFile = file("${rootProject.projectDir}/qa/checkstyle.xml")
+        ignoreFailures = false
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
-ext {
-    set('springCloudVersion', "2021.0.1")
-    set('testcontainersVersion', "1.16.2")
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.liquibase:liquibase-core'
-    implementation 'org.springframework.cloud:spring-cloud-config-server'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation 'org.testcontainers:mysql'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
+//configure {
+//    task dockerFile(type: Dockerfile, dependsOn: assemble) {
+//        destFile.set(project.file('Dockerfile'))
+//        from "alpine:$alpineVersion"
+//        runCommand 'apk add --no-cache openjdk17'
+//        copyFile "build/libs/${project.name}-${project.version}.jar", '/app/'
+//        workingDir '/app/'
+//        entryPoint 'java'
+//        defaultCommand '-jar', "/app/${project.name}-${project.version}.jar"
+//    }
+//
+//    task dockerBuild(type: DockerBuildImage, dependsOn: dockerFile) {
+//        inputDir.set(file("$projectDir/."))
+//        doLast {
+//            println("creatig image: $dockerRepoUrl/ingb-${project.name}:$version")
+//        }
+//        images.add("$dockerRepoUrl/ingb-${project.name}:$version")
+//    }
+//
+//    task dockerPush(type: DockerPushImage, dependsOn: dockerBuild) {
+//        images.add("$dockerRepoUrl/ingb-${project.name}:$version")
+//
+//        registryCredentials.setUsername("$dockerHubUsername")
+//        registryCredentials.setPassword("$dockerHubPassword")
+//        registryCredentials.setEmail("$dockerHubEmail")
+//    }
+//}
