@@ -1,0 +1,65 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java'
+}
+
+group 'com.ilkinmehdiyev.usermanagement'
+version '1.0.0.2b88053'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation project(":common")
+//    implementation project(":common-security")
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation "org.projectlombok:lombok-mapstruct-binding:$lombokMapstructBinding"
+
+//    implementation "org.apache.commons:commons-lang3:$apacheCommonsVersion"
+//    implementation "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:${circuitBreakerVersion}"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+//    implementation group: 'io.lettuce', name: 'lettuce-core', version: "$lettuceVersion"
+
+    compileOnly "org.mapstruct:mapstruct:$mapStructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
+
+
+//    implementation "org.passay:passay:$passayVersion"
+//    implementation "com.google.guava:guava:$guavaVersion"
+
+    implementation 'org.liquibase:liquibase-core'
+//    implementation "org.modelmapper:modelmapper:$modelmapperVersion"
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
