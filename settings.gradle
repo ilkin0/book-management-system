@@ -2,3 +2,4 @@ rootProject.name = 'book-management'
 
 /* libs */
 include 'common'
+include 'common-security'
