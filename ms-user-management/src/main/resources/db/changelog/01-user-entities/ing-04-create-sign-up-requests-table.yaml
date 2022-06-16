@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20220317-04
+      author: nasru11a
+      changes:
+        - createTable:
+            tableName: user_sign_up_requests
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_sign_up_requests_pk
+                    nullable: false
+              - column:
+                  name: mobile_number
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: device_id
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: otp_id
+                  type: bigint
+                  constraints:
+                    nullable: false

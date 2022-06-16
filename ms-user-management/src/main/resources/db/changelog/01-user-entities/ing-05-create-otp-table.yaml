@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20220322-05
+      author: vugarbakhishli
+      changes:
+        - createTable:
+            tableName: otp
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: otp_table_pk
+                    nullable: false
+              - column:
+                  name: otp
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: otp_lifetime
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: method_type
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: otp_status
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: temporary_user_password
+                  type: VARCHAR(255)

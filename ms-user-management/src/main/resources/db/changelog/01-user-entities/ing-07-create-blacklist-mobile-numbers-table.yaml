@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20220331-06
+      author: vugarbakhishli
+      changes:
+        - createTable:
+            tableName: mobile_numbers_on_blacklist
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: mobile_numbers_on_blacklist_pk
+                    nullable: false
+              - column:
+                  name: mobile_number
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false

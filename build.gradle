@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.7'
+    id 'org.springframework.boot' version '2.7.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.bmuschko.docker-remote-api' version "$dockerPluginVersion" apply false
     id 'java'
@@ -34,9 +34,9 @@ subprojects {
         implementation "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
         implementation "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
 
-        compileOnly "io.springfox:springfox-boot-starter:${springfoxStarterVersion}"
-        compileOnly "io.springfox:springfox-data-rest:${springfoxStarterVersion}"
-        compileOnly "io.springfox:springfox-bean-validators:${springfoxStarterVersion}"
+//        compileOnly "io.springfox:springfox-boot-starter:${springfoxStarterVersion}"
+//        compileOnly "io.springfox:springfox-data-rest:${springfoxStarterVersion}"
+//        compileOnly "io.springfox:springfox-bean-validators:${springfoxStarterVersion}"
     }
 
     pmd {

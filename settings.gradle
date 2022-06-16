@@ -3,4 +3,4 @@ rootProject.name = 'book-management'
 /* libs */
 include 'common'
 include 'common-security'
-include 'ms-user-management'
+include 'ms-user-management' //8090
