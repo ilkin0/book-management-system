@@ -1,5 +1,11 @@
 spring:
+  application:
+    name: ms-usermanagement
   profiles:
-    include:
-      - common
-      - db
+    active: prod
+  cloud:
+    config:
+      profile: prod
+      label: usermanagement
+      name: ms
+      uri: ${CONFIG_SERVER_URL:localhost:8888}

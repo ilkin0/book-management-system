@@ -4,3 +4,4 @@ rootProject.name = 'book-management'
 include 'common'
 include 'common-security'
 include 'ms-user-management' //8090
+include 'config-server'
