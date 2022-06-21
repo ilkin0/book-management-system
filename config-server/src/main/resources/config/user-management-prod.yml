@@ -4,10 +4,16 @@ spring:
     url: &connectionUrl jdbc:mysql://${DB_CONNECTION_IP:localhost}:${DB_CONNECTION_PORT:3306}/ms_user_management_db?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
     username: &username ${DB_CONNECTION_USERNAME:root}
     password: &password ${DB_CONNECTION_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     show-sql: true
     generate-ddl: false
     hibernate:
       ddl-auto: validate
+    open-in-view: false
   liquibase:
     enabled: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect

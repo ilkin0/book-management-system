@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: user-management
+  profiles:
+    active: prod
+  cloud:
+    config:
+      profile: prod
+#      label: usermanagement
+#      name: usermanagement
+      uri: http://localhost:8888
