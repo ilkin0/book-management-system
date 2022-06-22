@@ -1,11 +1,11 @@
 spring:
   application:
-    name: user-management
+    name: ms-management
   profiles:
     active: prod
   cloud:
     config:
       profile: prod
-#      label: usermanagement
-#      name: usermanagement
+      label: management
+      name: ms
       uri: http://localhost:8888
