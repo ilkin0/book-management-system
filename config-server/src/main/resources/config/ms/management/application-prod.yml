@@ -14,8 +14,3 @@ spring:
     open-in-view: false
   liquibase:
     enabled: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-test:
-  string: 'Hello World'

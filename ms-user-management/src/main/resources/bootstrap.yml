@@ -6,6 +6,6 @@ spring:
   cloud:
     config:
       profile: prod
+      uri: http://localhost:8888
       label: management
       name: ms
-      uri: http://localhost:8888

@@ -21,41 +21,27 @@ ext {
     set('springCloudVersion', "2021.0.3")
 }
 
-
 dependencies {
 
     implementation project(":common")
 //    implementation project(":common-security")
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    implementation "org.springframework.cloud:spring-cloud-starter-config:${springCloudStarterVersion}"
     implementation "org.springframework.cloud:spring-cloud-starter-bootstrap:${springCloudStarterVersion}"
-    implementation "org.springframework.cloud:spring-cloud-config-server:${springCloudStarterVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.liquibase:liquibase-core'
+    implementation "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBinding}"
 
-    implementation "org.projectlombok:lombok-mapstruct-binding:$lombokMapstructBinding"
-
-//    implementation "org.apache.commons:commons-lang3:$apacheCommonsVersion"
-//    implementation "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:${circuitBreakerVersion}"
+    compileOnly "org.mapstruct:mapstruct:${mapStructVersion}"
+    compileOnly 'org.projectlombok:lombok'
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-
-//    implementation group: 'io.lettuce', name: 'lettuce-core', version: "$lettuceVersion"
-
-    compileOnly "org.mapstruct:mapstruct:$mapStructVersion"
-    annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
-
-
-//    implementation "org.passay:passay:$passayVersion"
-//    implementation "com.google.guava:guava:$guavaVersion"
-
-    implementation 'org.liquibase:liquibase-core'
-//    implementation "org.modelmapper:modelmapper:$modelmapperVersion"
-
-    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
     annotationProcessor 'org.projectlombok:lombok'
 
     runtimeOnly 'mysql:mysql-connector-java'
@@ -65,8 +51,8 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
-//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
 dependencyManagement {

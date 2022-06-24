@@ -5,3 +5,4 @@ include 'common'
 include 'common-security'
 include 'ms-user-management' //8090
 include 'config-server'    //8888
+include 'service-discovery' //9090
