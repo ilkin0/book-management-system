@@ -1,6 +1,5 @@
 package com.ilkinmehdiyev.common.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringSubstitutor;
 import org.springframework.context.MessageSource;
@@ -10,7 +9,6 @@ import java.util.Locale;
 import java.util.Map;
 
 @Slf4j
-//@AllArgsConstructor
 public class ApplicationException extends RuntimeException {
     static final long serialVersionUID = 1L;
 

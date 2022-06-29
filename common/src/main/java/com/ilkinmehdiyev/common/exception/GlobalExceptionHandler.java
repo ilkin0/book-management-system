@@ -24,7 +24,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.ilkinmehdiyev.common.HttpResponseConstants.*;
+import static com.ilkinmehdiyev.common.HttpResponseConstants.ERROR;
+import static com.ilkinmehdiyev.common.HttpResponseConstants.ERRORS;
+import static com.ilkinmehdiyev.common.HttpResponseConstants.MESSAGE;
+import static com.ilkinmehdiyev.common.HttpResponseConstants.PATH;
+import static com.ilkinmehdiyev.common.HttpResponseConstants.STATUS;
 
 @Slf4j
 @RestControllerAdvice
