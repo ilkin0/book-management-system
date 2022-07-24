@@ -15,4 +15,3 @@ public interface JwtService {
 
     void addClaims(JwtBuilder jwtBuilder, Authentication authentication);
 }
-

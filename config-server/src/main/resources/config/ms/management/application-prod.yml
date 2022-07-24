@@ -14,3 +14,15 @@ spring:
     open-in-view: false
   liquibase:
     enabled: true
+
+security:
+  jwtProperties:
+    secret: ${APP_SECRET_KEY:VGhpcyBteSBzZWNyZXQga2V5IGZvciBBcHBsaWNhdGlvbi4gUGxlYXNlIGNoYW5nZSBpbiBwcm9kdWN0aW9uLg==}
+    token-validity-in-seconds: 86400
+    token-validity-in-seconds-for-remember-me: 604800
+
+otp:
+  otpLifeTime: 300000 # 5min
+  interval: 60 #seconds - one hour
+  maxAllowedAttemptsTimedBlocking: 3
+  maxAllowedAttemptsPermanentBlocking: 10

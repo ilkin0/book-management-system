@@ -38,76 +38,75 @@ public class GlobalExceptionHandler extends DefaultErrorAttributes {
     private final MessageSource messageSource;
 
     @ExceptionHandler(ApplicationException.class)
-    public ResponseEntity<Map<String, Object>> handle(ApplicationException ex,
-                                                      WebRequest request) {
+    public ResponseEntity<Map<String, Object>> handle(ApplicationException ex, WebRequest request) {
         log.trace("Required request body is missing {}", ex.getMessage());
         return ofType(request, ex.getErrorResponse().getHttpStatus(), ex);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public final ResponseEntity<Map<String, Object>> handle(ConstraintViolationException ex,
-                                                            WebRequest request) {
+    public final ResponseEntity<Map<String, Object>> handle(
+            ConstraintViolationException ex, WebRequest request) {
         log.trace("Resource not found {}", ex.getMessage());
-        List<ConstraintsViolationError> validationErrors = ex.getConstraintViolations()
-                .stream()
-                .map(violation -> new ConstraintsViolationError(violation.getPropertyPath().toString(),
-                        violation.getMessage()))
-                .collect(Collectors.toList());
+        List<ConstraintsViolationError> validationErrors =
+                ex.getConstraintViolations().stream()
+                        .map(
+                                violation ->
+                                        new ConstraintsViolationError(
+                                                violation.getPropertyPath().toString(), violation.getMessage()))
+                        .collect(Collectors.toList());
         return ofType(request, HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), validationErrors);
     }
 
     @ExceptionHandler(MismatchedInputException.class)
-    public final ResponseEntity<Map<String, Object>> handle(MismatchedInputException ex,
-                                                            WebRequest request) {
+    public final ResponseEntity<Map<String, Object>> handle(
+            MismatchedInputException ex, WebRequest request) {
         log.trace("Mismatched inout : {}", ex.getMessage());
         return ofType(request, HttpStatus.BAD_REQUEST, ex);
     }
 
     @ExceptionHandler(BindException.class)
-    public final ResponseEntity<Map<String, Object>> handle(
-            BindException ex,
-            WebRequest request) {
-        List<ConstraintsViolationError> validationErrors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(error -> new ConstraintsViolationError(error.getField(), error.getDefaultMessage()))
-                .collect(Collectors.toList());
+    public final ResponseEntity<Map<String, Object>> handle(BindException ex, WebRequest request) {
+        List<ConstraintsViolationError> validationErrors =
+                ex.getBindingResult().getFieldErrors().stream()
+                        .map(
+                                error -> new ConstraintsViolationError(error.getField(), error.getDefaultMessage()))
+                        .collect(Collectors.toList());
 
         return ofType(request, HttpStatus.BAD_REQUEST, getLocalizedMessage(ex), validationErrors);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public final ResponseEntity<Map<String, Object>> handle(
-            MethodArgumentNotValidException ex,
-            WebRequest request) {
-        List<ConstraintsViolationError> validationErrors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(error -> new ConstraintsViolationError(error.getField(), error.getDefaultMessage()))
-                .collect(Collectors.toList());
+            MethodArgumentNotValidException ex, WebRequest request) {
+        List<ConstraintsViolationError> validationErrors =
+                ex.getBindingResult().getFieldErrors().stream()
+                        .map(
+                                error -> new ConstraintsViolationError(error.getField(), error.getDefaultMessage()))
+                        .collect(Collectors.toList());
 
         return ofType(request, HttpStatus.BAD_REQUEST, getLocalizedMessage(ex), validationErrors);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handle(Exception ex,
-                                                      WebRequest request) {
+    public ResponseEntity<Map<String, Object>> handle(Exception ex, WebRequest request) {
         log.error("Server failure", ex);
         return ofType(request, HttpStatus.INTERNAL_SERVER_ERROR, ex);
     }
 
-    protected ResponseEntity<Map<String, Object>> ofType(WebRequest request,
-                                                         HttpStatus status, ApplicationException ex) {
+    protected ResponseEntity<Map<String, Object>> ofType(
+            WebRequest request, HttpStatus status, ApplicationException ex) {
         Locale locale = LocaleContextHolder.getLocale();
-        return ofType(request, status, ex.getLocalizedMessage(locale, messageSource), Collections.EMPTY_LIST);
+        return ofType(
+                request, status, ex.getLocalizedMessage(locale, messageSource), Collections.EMPTY_LIST);
     }
 
-    protected ResponseEntity<Map<String, Object>> ofType(WebRequest request, HttpStatus status, Exception ex) {
+    protected ResponseEntity<Map<String, Object>> ofType(
+            WebRequest request, HttpStatus status, Exception ex) {
         return ofType(request, status, ex.getLocalizedMessage(), Collections.EMPTY_LIST);
     }
 
-    private ResponseEntity<Map<String, Object>> ofType(WebRequest request, HttpStatus status, String message,
-                                                       List validationErrors) {
+    private ResponseEntity<Map<String, Object>> ofType(
+            WebRequest request, HttpStatus status, String message, List validationErrors) {
         Map<String, Object> attributes = getErrorAttributes(request, ErrorAttributeOptions.defaults());
         attributes.put(STATUS, status.value());
         attributes.put(ERROR, getLocalizedReasonPhrase(status));
@@ -133,9 +132,11 @@ public class GlobalExceptionHandler extends DefaultErrorAttributes {
         try {
             return messageSource.getMessage(status.value() + ".message", new Object[]{}, locale);
         } catch (NoSuchMessageException exception) {
-            log.warn("Please consider adding localized message for key {} and locale {}", status.value(), locale);
+            log.warn(
+                    "Please consider adding localized message for key {} and locale {}",
+                    status.value(),
+                    locale);
         }
         return status.getReasonPhrase();
     }
 }
-

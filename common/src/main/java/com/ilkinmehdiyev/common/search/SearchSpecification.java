@@ -21,9 +21,10 @@ public class SearchSpecification<T> implements Specification<T> {
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        Predicate[] predicates = criteriaList.stream()
-                .map(criteria -> criteria.getOperation().buildPredicate(root, criteria, builder))
-                .toArray(Predicate[]::new);
+        Predicate[] predicates =
+                criteriaList.stream()
+                        .map(criteria -> criteria.getOperation().buildPredicate(root, criteria, builder))
+                        .toArray(Predicate[]::new);
         return builder.and(predicates);
     }
 }

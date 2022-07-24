@@ -43,23 +43,20 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public Claims parseToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
     @Override
     public String issueToken(Authentication authentication, Duration duration) {
         log.trace("Issue JWT token to {} for {}", authentication.getPrincipal(), duration);
 
-        final var jwtBuilder = Jwts.builder()
-                .setSubject(authentication.getName())
-                .setIssuedAt(new Date())
-                .setExpiration(Date.from(Instant.now().plus(duration)))
-                .setHeader(Map.of("type", "JWT"))
-                .signWith(key, SignatureAlgorithm.RS512);
+        final var jwtBuilder =
+                Jwts.builder()
+                        .setSubject(authentication.getName())
+                        .setIssuedAt(new Date())
+                        .setExpiration(Date.from(Instant.now().plus(duration)))
+                        .setHeader(Map.of("type", "JWT"))
+                        .signWith(key, SignatureAlgorithm.HS512);
 
         addClaimsSets(jwtBuilder, authentication);
         addClaims(jwtBuilder, authentication);
@@ -69,21 +66,23 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public void addClaimsSets(JwtBuilder jwtBuilder, Authentication authentication) {
-        claimSetProviders.forEach(setProvider -> {
-            final var claimSet = setProvider.provide(authentication);
-            log.trace("Adding claim {}", claimSet);
+        claimSetProviders.forEach(
+                setProvider -> {
+                    final var claimSet = setProvider.provide(authentication);
+                    log.trace("Adding claim {}", claimSet);
 
-            jwtBuilder.claim(claimSet.key(), claimSet.claims());
-        });
+                    jwtBuilder.claim(claimSet.key(), claimSet.claims());
+                });
     }
 
     @Override
     public void addClaims(JwtBuilder jwtBuilder, Authentication authentication) {
-        claimProviders.forEach(provider -> {
-            final var claim = provider.provide(authentication);
-            log.trace("Adding claim: {}", claim);
+        claimProviders.forEach(
+                provider -> {
+                    final var claim = provider.provide(authentication);
+                    log.trace("Adding claim: {}", claim);
 
-            jwtBuilder.claim(claim.key(), claim.claim());
-        });
+                    jwtBuilder.claim(claim.key(), claim.claim());
+                });
     }
 }

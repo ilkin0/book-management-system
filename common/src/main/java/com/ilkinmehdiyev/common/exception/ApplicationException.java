@@ -24,7 +24,8 @@ public class ApplicationException extends RuntimeException {
         this.messageArguments = messageArguments;
     }
 
-    public ApplicationException(ErrorResponse errorResponse, Map<String, Object> messageArguments, Throwable cause) {
+    public ApplicationException(
+            ErrorResponse errorResponse, Map<String, Object> messageArguments, Throwable cause) {
         super(cause);
         this.errorResponse = errorResponse;
         this.messageArguments = messageArguments;
@@ -43,18 +44,23 @@ public class ApplicationException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return messageArguments.isEmpty() ? errorResponse.getMessage() :
-                StringSubstitutor.replace(errorResponse.getMessage(), messageArguments, "{", "}");
+        return messageArguments.isEmpty()
+                ? errorResponse.getMessage()
+                : StringSubstitutor.replace(errorResponse.getMessage(), messageArguments, "{", "}");
     }
 
     public String getLocalizedMessage(Locale locale, MessageSource messageSource) {
         try {
-            String localizedMessage = messageSource.getMessage(errorResponse.getKey(), new Object[]{}, locale);
-            return messageArguments.isEmpty() ? localizedMessage :
-                    StringSubstitutor.replace(localizedMessage, messageArguments, "{", "}");
+            String localizedMessage =
+                    messageSource.getMessage(errorResponse.getKey(), new Object[]{}, locale);
+            return messageArguments.isEmpty()
+                    ? localizedMessage
+                    : StringSubstitutor.replace(localizedMessage, messageArguments, "{", "}");
         } catch (NoSuchMessageException exception) {
-            log.warn("Please consider adding localized message for key {} and locale {}",
-                    errorResponse.getKey(), locale);
+            log.warn(
+                    "Please consider adding localized message for key {} and locale {}",
+                    errorResponse.getKey(),
+                    locale);
         }
         return getMessage();
     }

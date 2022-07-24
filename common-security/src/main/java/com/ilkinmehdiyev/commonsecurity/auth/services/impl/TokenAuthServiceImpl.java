@@ -25,7 +25,6 @@ public class TokenAuthServiceImpl implements AuthService {
     public final String AUTHORITIES_CLAIM = "authorities";
     public final String BEARER_AUTH_HEADER = "Bearer";
 
-
     private final JwtService jwtService;
 
     @Override
@@ -40,8 +39,7 @@ public class TokenAuthServiceImpl implements AuthService {
         Claims claims = jwtService.parseToken(token);
         log.trace("The claims parsed: {}", claims);
 
-        if (claims.getExpiration().before(new Date()))
-            return Optional.empty();
+        if (claims.getExpiration().before(new Date())) return Optional.empty();
 
         return Optional.of(getAuthenticationBearer(claims));
     }
@@ -49,8 +47,8 @@ public class TokenAuthServiceImpl implements AuthService {
     private Authentication getAuthenticationBearer(Claims claims) {
         List<?> roles = claims.get(AUTHORITIES_CLAIM, List.class);
 
-        List<SimpleGrantedAuthority> authorityList = roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.toString())).toList();
+        List<SimpleGrantedAuthority> authorityList =
+                roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).toList();
 
         return new UsernamePasswordAuthenticationToken(claims.getSubject(), "", authorityList);
     }

@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 20220322-05
-      author: vugarbakhishli
+      id: 20220712-05
+      author: ilkinmehdiyev
       changes:
         - createTable:
             tableName: otp
@@ -15,6 +15,11 @@ databaseChangeLog:
                     primaryKeyName: otp_table_pk
                     nullable: false
               - column:
+                  name: uuid
+                  type: BINARY(36)
+                  constraints:
+                    nullable: false
+              - column:
                   name: otp
                   type: VARCHAR(255)
                   constraints:
@@ -25,20 +30,32 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: otp_lifetime
+                  name: created_date
+                  type: datetime
+              - column:
+                  name: otp_life_time
                   type: INT
                   constraints:
                     nullable: false
               - column:
-                  name: method_type
+                  name: type
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: otp_status
+                  name: status
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: temporary_user_password
-                  type: VARCHAR(255)
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - addForeignKeyConstraint:
+                  baseTableName: otp
+                  baseColumnNames: user_id
+                  constraintName: otp_fk
+                  referencedTableName: user
+                  referencedColumnNames: id
+                  onDelete: CASCADE

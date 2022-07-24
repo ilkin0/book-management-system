@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 20220331-06
-      author: vugarbakhishli
+      id: 20220712-02
+      author: ilkinmehdiyev
       changes:
         - createTable:
-            tableName: mobile_numbers_on_blacklist
+            tableName: authority
             columns:
               - column:
                   name: id
@@ -12,15 +12,18 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    primaryKeyName: mobile_numbers_on_blacklist_pk
+                    primaryKeyName: authority_pk
                     nullable: false
               - column:
-                  name: mobile_number
-                  type: VARCHAR(255)
+                  name: uuid
+                  type: BINARY(36)
                   constraints:
                     nullable: false
               - column:
-                  name: creation_time
-                  type: TIMESTAMP
+                  name: created_date
+                  type: datetime
+              - column:
+                  name: authority
+                  type: VARCHAR(50)
                   constraints:
                     nullable: false

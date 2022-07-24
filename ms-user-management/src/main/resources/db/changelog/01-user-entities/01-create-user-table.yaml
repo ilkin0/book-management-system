@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 20200907-02
-      author: aslanov
+      id: 20220712-01
+      author: ilkinmehdiyev
       changes:
         - createTable:
-            tableName: users
+            tableName: user
             columns:
               - column:
                   name: id
@@ -20,7 +20,20 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: uuid
+                  type: BINARY(36)
+                  constraints:
+                    nullable: false
+              - column:
                   name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
                   type: VARCHAR(255)
               - column:
                   name: username
@@ -42,8 +55,7 @@ databaseChangeLog:
                   name: enabled
                   type: BOOLEAN
               - column:
-                  name: creation_date
+                  name: created_date
                   type: datetime
         - sql:
-            sql: "ALTER TABLE users AUTO_INCREMENT=1;"
-
+            sql: "ALTER TABLE user AUTO_INCREMENT=1;"

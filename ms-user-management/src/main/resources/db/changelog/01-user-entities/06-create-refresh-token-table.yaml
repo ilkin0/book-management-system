@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 20220317-04
-      author: nasru11a
+      id: 20220717-05
+      author: ilkinmehdiyev
       changes:
         - createTable:
-            tableName: user_sign_up_requests
+            tableName: refresh_token
             columns:
               - column:
                   name: id
@@ -12,25 +12,31 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    primaryKeyName: user_sign_up_requests_pk
+                    primaryKeyName: refresh_token_pk
                     nullable: false
               - column:
-                  name: mobile_number
+                  name: uuid
+                  type: BINARY(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_date
+                  type: datetime
+              - column:
+                  name: username
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: device_id
+                  name: token
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: creation_time
+                  name: expiry_date
                   type: TIMESTAMP
                   constraints:
                     nullable: false
               - column:
-                  name: otp_id
-                  type: bigint
-                  constraints:
-                    nullable: false
+                  name: valid
+                  type: boolean

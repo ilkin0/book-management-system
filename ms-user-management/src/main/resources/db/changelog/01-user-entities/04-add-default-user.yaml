@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20220712-04
+      author: ilkinmehdiyev
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: password
+                  value: '$2a$10$f0zqjKXV4MEwHinjHcWUpeeVpeGH55k4FsHqDQhuAxCUmMrV.CmD.' #123456- column:
+              - column:
+                  name: uuid
+                  value: '6d398240-86e4-455a-b463-f49da51d5cb2'
+              - column:
+                  name: created_date
+                  value: now()
+              - column:
+                  name: username
+                  value: 'jdoe01'
+              - column:
+                  name: phone_number
+                  value: '+994331234567'
+              - column:
+                  name: name
+                  value: 'Jhon Doe'
+              - column:
+                  name: email
+                  value: 'test@mail.com'
+              - column:
+                  name: enabled
+                  valueBoolean: true
+              - column:
+                  name: account_non_expired
+                  valueBoolean: true
+              - column:
+                  name: account_non_locked
+                  valueBoolean: true
+              - column:
+                  name: credentials_non_expired
+                  valueBoolean: true

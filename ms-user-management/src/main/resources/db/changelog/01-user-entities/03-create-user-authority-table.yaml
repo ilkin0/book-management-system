@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 20200907-05
-      author: aslanov
+      id: 20220712-03
+      author: ilkinmehdiyev
       changes:
         - createTable:
             tableName: user_authorities
@@ -24,14 +24,14 @@ databaseChangeLog:
             baseTableName: user_authorities
             baseColumnNames: user_id
             constraintName: user_authority_user_fk
-            referencedTableName: users
+            referencedTableName: user
             referencedColumnNames: id
             onDelete: CASCADE
         - addForeignKeyConstraint:
             baseTableName: user_authorities
             baseColumnNames: authority_id
             constraintName: user_authority_authority_fk
-            referencedTableName: authorities
+            referencedTableName: authority
             referencedColumnNames: id
             onDelete: RESTRICT
             onUpdate: CASCADE

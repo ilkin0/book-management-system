@@ -9,5 +9,4 @@ class CommonSecurityApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
