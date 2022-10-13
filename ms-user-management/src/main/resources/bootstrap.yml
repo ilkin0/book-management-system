@@ -7,5 +7,5 @@ spring:
     config:
       profile: prod
       uri: http://localhost:8888
-      label: management
+      label: user-management
       name: ms

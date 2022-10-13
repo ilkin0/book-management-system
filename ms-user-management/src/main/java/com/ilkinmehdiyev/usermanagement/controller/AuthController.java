@@ -30,7 +30,9 @@ import static com.ilkinmehdiyev.usermanagement.util.Const.APIS.AUTH_URL;
 public class AuthController {
 
     private final AuthService authService;
+
     private final UserService userService;
+
     private final OtpService otpService;
 
     @PostMapping("/sign-up")
@@ -51,8 +53,8 @@ public class AuthController {
         JwtTokenResponseDto tokenResponseDto = authService.signIn(requestDto);
 
         var httpHeader = new HttpHeaders();
-        httpHeader.add(
-                HttpHeaders.AUTHORIZATION, "Bearer " .concat(tokenResponseDto.accessToken().token()));
+        httpHeader.add(HttpHeaders.AUTHORIZATION, "Bearer " .concat(tokenResponseDto.accessToken().token()));
+
         return new ResponseEntity<>(tokenResponseDto, httpHeader, HttpStatus.OK);
     }
 

@@ -8,6 +8,12 @@ import com.ilkinmehdiyev.usermanagement.model.enums.OtpType;
 import com.ilkinmehdiyev.usermanagement.repo.UserRepository;
 import com.ilkinmehdiyev.usermanagement.service.interfaces.OtpService;
 import com.ilkinmehdiyev.usermanagement.service.interfaces.UserService;
+import static com.ilkinmehdiyev.usermanagement.error.Error.USERNAME_NOT_FOUND;
+import static com.ilkinmehdiyev.usermanagement.error.Error.USER_ALREADY_EXISTS;
+import static com.ilkinmehdiyev.usermanagement.error.Error.USER_NOT_FOUND;
+
+import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,19 +22,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
-import java.util.Optional;
-
-import static com.ilkinmehdiyev.usermanagement.error.Error.USERNAME_NOT_FOUND;
-import static com.ilkinmehdiyev.usermanagement.error.Error.USER_ALREADY_EXISTS;
-import static com.ilkinmehdiyev.usermanagement.error.Error.USER_NOT_FOUND;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     private final OtpService otpService;
@@ -83,10 +83,9 @@ public class UserServiceImpl implements UserService {
     public User getById(long id) {
         return userRepository
                 .findById(id)
-                .orElseThrow(
-                        () -> {
-                            log.error("Cannot find USer with {} id", id);
-                            return new ApplicationException(USER_NOT_FOUND);
-                        });
+                .orElseThrow(() -> {
+                    log.error("Cannot find USer with {} id", id);
+                    return new ApplicationException(USER_NOT_FOUND);
+                });
     }
 }

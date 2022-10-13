@@ -1,3 +1,6 @@
+server:
+  port: ${SERVER_PORT:8090}
+
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
@@ -7,11 +10,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-    show-sql: true
+    show-sql: false
     generate-ddl: false
     hibernate:
       ddl-auto: validate
     open-in-view: false
+
   liquibase:
     enabled: true
 
