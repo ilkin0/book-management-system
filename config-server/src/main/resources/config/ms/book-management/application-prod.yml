@@ -1,0 +1,32 @@
+server:
+  port: ${SERVER_PORT:8091}
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: &connectionUrl jdbc:mysql://${DB_CONNECTION_IP:localhost}:${DB_CONNECTION_PORT:3306}/book_management_db?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
+    username: &username ${DB_CONNECTION_USERNAME:root}
+    password: &password ${DB_CONNECTION_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  liquibase:
+    enabled: true
+
+#security:
+#  jwtProperties:
+#    secret: ${APP_SECRET_KEY:VGhpcyBteSBzZWNyZXQga2V5IGZvciBBcHBsaWNhdGlvbi4gUGxlYXNlIGNoYW5nZSBpbiBwcm9kdWN0aW9uLg==}
+#    token-validity-in-seconds: 86400
+#    token-validity-in-seconds-for-remember-me: 604800
+#
+#otp:
+#  otpLifeTime: 300000 # 5min
+#  interval: 60 #seconds - one hour
+#  maxAllowedAttemptsTimedBlocking: 3
+#  maxAllowedAttemptsPermanentBlocking: 10
