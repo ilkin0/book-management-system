@@ -6,6 +6,7 @@ plugins {
 
 group 'com.ilkinmehdiyev'
 version '1.0.0.484dbea'
+sourceCompatibility = JavaVersion.VERSION_17
 
 
 configurations {

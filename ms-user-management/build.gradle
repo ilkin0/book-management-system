@@ -6,6 +6,7 @@ plugins {
 
 group 'com.ilkinmehdiyev.usermanagement'
 version '1.0.0.2b88053'
+sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
     compileOnly {
